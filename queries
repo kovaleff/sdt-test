@@ -1,0 +1,24 @@
+2. Написать SQL запросы, возвращающие набор данных, соответствующий
+следующим условиям:
+a. Выбрать имена (name) всех клиентов, которые не делали заказы в последние 7 дней.
+
+SELECT name FROM `orders` INNER JOIN clients ON customer_id = clients.id WHERE order_date < DATE_ADD(NOW(), INTERVAL -7 DAY);
+
+
+b. Выбрать имена (name) 5 клиентов, которые сделали больше всего заказов в магазине.
+
+SELECT name , COUNT(*) AS CLIENTS_COUNT FROM `orders` INNER JOIN clients ON customer_id = clients.id GROUP BY `customer_id` ORDER BY CLIENTS_COUNT DESC
+
+
+c. Выбрать имена (name) 10 клиентов, которые сделали заказы на наибольшую сумму.
+
+наибольшую сумму ??? - цены вроде нет в задании
+
+d. Выбрать имена (name) всех товаров, по которым не было доставленных заказов (со статусом “complete”).
+
+SELECT DISTINCT name FROM `orders` INNER JOIN merchandise ON `item_id` = merchandise.id  WHERE `status` = 'new'
+
+3. Описать, какие бы вы создали индексы для оптимизации скорости работы запросов из п.2 и почему
+
+clients,	merchandise - индекс name , по ним есть поиск
+orders - по status, order_date - участвуют при сортировке
